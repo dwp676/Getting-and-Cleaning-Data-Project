@@ -64,5 +64,12 @@ names(subsettable) <-gsub("BodyBody","Body", names(subsettable))
 names(subsettable) <-gsub("Mag","Magnitude", names(subsettable))
 
 #INSTRUCTION 5: Create a second, independent tidy data set with the average of each variable for each activity and each subject. 
+install.packages("dplyr")
+library(dplyr)
+FinalTidyOutput <-aggregate(. ~SubjectID + ActivityID + ActivityDescription, subsettable, mean)
+FinalTidyOutput<-FinalTidyOutput[order(FinalTidyOutput$SubjectID, FinalTidyOutput$ActivityDescription),]
 
-View(subsettable)
+#Write resulting tidy table to output file in .txt format
+write.table(FinalTidyOutput, file = "FinalTidyOutput.txt", row.name = FALSE)
+
+
